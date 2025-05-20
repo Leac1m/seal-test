@@ -34,7 +34,7 @@ export default function Home() {
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [info, setInfo] = useState<Data | null>(null);
   const { currentWallet, connectionStatus } = useCurrentWallet();
-
+  
   const [selectedService, setSelectedService] = useState<string>('service1');
 
   const SUI_VIEW_TX_URL = `https://suiscan.xyz/testnet/tx`;
@@ -104,17 +104,17 @@ export default function Home() {
     return `${service?.publisherUrl}/v1/${cleanPath}`
   }
 
-  const { mutate: signAndExecute } = useSignAndExecuteTransaction({
-    execute: async ({ bytes, signature }) =>
-      await suiClient.executeTransactionBlock({
-        transactionBlock: bytes,
-        signature,
-        options: {
-          showRawEffects: true,
-          showEffects: true,
-        },
-      }),
-  });
+  // const { mutate: signAndExecute } = useSignAndExecuteTransaction({
+  //   execute: async ({ bytes, signature }) =>
+  //     await suiClient.executeTransactionBlock({
+  //       transactionBlock: bytes,
+  //       signature,
+  //       options: {
+  //         showRawEffects: true,
+  //         showEffects: true,
+  //       },
+  //     }),
+  // });
 
 
   const storeBlob = (encryptedData: Uint8Array) => {
