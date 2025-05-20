@@ -110,7 +110,6 @@ export default function DecryptPage() {
 
     return (
         <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center px-4">
-            {/* Wallet Connect Button */}
             <div className="absolute top-6 right-6">
                 <ConnectButton />
             </div>
