@@ -7,7 +7,7 @@ import { useSignAndExecuteTransaction, useSuiClient } from '@mysten/dapp-kit';
 import { Transaction } from '@mysten/sui/transactions';
 import { useNetworkVariable } from '@/utils/networkConfig';
 import { fromHex, toHex } from '@mysten/sui/utils';
-import { getAllowlistedKeyServers, SealClient } from '@mysten/seal';
+import { SealClient } from '@mysten/seal';
 
 export type Data = {
   status: string;
@@ -42,10 +42,15 @@ export default function Home() {
 
   const NUM_EPOCH = 1;
   const packageId = useNetworkVariable('packageId');
+  const serverObjectIds = ["0x73d05d62c18d9374e3ea529e8e0ed6161da1a141a94d3f76ae3fe4e99356db75", "0xf5d14a81a982144ae441cd7d64b09027f116a468bd36e7eca494f750591623c8"]
   const suiClient = useSuiClient();
+
   const client = new SealClient({
     suiClient,
-    serverObjectIds: getAllowlistedKeyServers('testnet'),
+    serverConfigs: serverObjectIds.map((id) => ({
+      objectId: id,
+      weight: 1,
+    })),
     verifyKeyServers: false,
   });
 

@@ -10,7 +10,7 @@ import {
 import { coinWithBalance, Transaction } from '@mysten/sui/transactions';
 import { useNetworkVariable } from '@/utils/networkConfig';
 import { fromHex, SUI_CLOCK_OBJECT_ID } from '@mysten/sui/utils';
-import { SealClient, SessionKey, getAllowlistedKeyServers } from '@mysten/seal';
+import { SealClient, SessionKey } from '@mysten/seal';
 import '@mysten/dapp-kit/dist/index.css';
 import { MoveCallConstructor, downloadAndDecrypt } from '@/utils/decrypt';
 
@@ -25,10 +25,14 @@ export default function DecryptPage() {
     const [currentSessionKey, setCurrentSessionKey] = useState<SessionKey | null>(null);
     const { mutate: signPersonalMessage } = useSignPersonalMessage();
     const currentAccount = useCurrentAccount();
+    const serverObjectIds = ["0x73d05d62c18d9374e3ea529e8e0ed6161da1a141a94d3f76ae3fe4e99356db75", "0xf5d14a81a982144ae441cd7d64b09027f116a468bd36e7eca494f750591623c8"]
 
     const client = new SealClient({
         suiClient,
-        serverObjectIds: getAllowlistedKeyServers('testnet'),
+        serverConfigs: serverObjectIds.map((id) => ({
+      objectId: id,
+      weight: 1,
+    })),
         verifyKeyServers: false,
     });
     const wallet = useCurrentWallet();
