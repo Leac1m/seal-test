@@ -52,7 +52,7 @@ export default function DecryptPage() {
     }
 
 
-    const handleDecrypt = () => {
+    const handleDecrypt = async () => {
         if (!wallet) {
             alert('Connect your wallet first.');
             return;
@@ -76,10 +76,11 @@ export default function DecryptPage() {
             return;
         }
         setCurrentSessionKey(null);
-        const sessionKey = new SessionKey({
+        const sessionKey = await SessionKey.create({
             address: currentAccount?.address!,
             packageId,
             ttlMin: TTL_MIN,
+            suiClient,
         });
         console.log(sessionKey);
 

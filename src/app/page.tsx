@@ -182,6 +182,7 @@ export default function Home() {
         const policyObjectBytes = fromHex(currentWallet?.accounts[0].address!);
         const id = toHex(new Uint8Array([...policyObjectBytes, ...nonce]));
         console.log('Encrypting...', packageId);
+        console.log("PolicyObject :", policyObjectBytes);
         const { encryptedObject: encryptedBytes } = await client.encrypt({
           threshold: 2,
           packageId,
@@ -189,13 +190,19 @@ export default function Home() {
           data: textBytes,
         });
 
-        console.log('Uploading to Walrus...');
+        console.log("encryption :",{ 
+          before: new TextDecoder().decode(textBytes),
+          after: new TextDecoder().decode(encryptedBytes)
+        })
+
+         console.log('Uploading to Walrus...');
 
         const storageInfo = await storeBlob(encryptedBytes);
         displayUpload(storageInfo.info, "text");
         console.log('Successfully uploaded to Walrus!');
         console.log(info);
         setIsUploading(false);
+        
       } catch (error) {
         console.error(error);
       }
